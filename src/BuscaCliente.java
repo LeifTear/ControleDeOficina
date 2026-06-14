@@ -2,11 +2,11 @@ import java.util.ArrayList;
 
 public class BuscaCliente {
 
-    public Cliente buscarPorId(
-            ArrayList<Cliente> clientes,
+    public DadosCliente buscarPorId(
+            ArrayList<DadosCliente> dadosClientes,
             int id) {
 
-        for (Cliente c : clientes) {
+        for (DadosCliente c : dadosClientes) {
 
             if (c.getId() == id) {
                 return c;
@@ -16,11 +16,11 @@ public class BuscaCliente {
         return null;
     }
 
-    public Cliente buscarPorNome(
-            ArrayList<Cliente> clientes,
+    public DadosCliente buscarPorNome(
+            ArrayList<DadosCliente> dadosClientes,
             String nome) {
 
-        for (Cliente c : clientes) {
+        for (DadosCliente c : dadosClientes) {
 
             if (c.getNome()
                     .equalsIgnoreCase(nome)) {
@@ -32,11 +32,11 @@ public class BuscaCliente {
         return null;
     }
 
-    public Cliente buscarPorPlaca(
-            ArrayList<Cliente> clientes,
+    public DadosCliente buscarPorPlaca(
+            ArrayList<DadosCliente> dadosClientes,
             String placa) {
 
-        for (Cliente c : clientes) {
+        for (DadosCliente c : dadosClientes) {
 
             if (c.getPlaca()
                     .equalsIgnoreCase(placa)) {

@@ -3,20 +3,33 @@ import java.util.Scanner;
 
 public class OficinaService {
 
-    private ArrayList<Cliente> clientes;
+    private ArrayList<DadosCliente> dadosClientes;
     private BuscaCliente busca;
 
     public OficinaService() {
 
-        clientes =
+        dadosClientes =
                 ArquivoCliente.carregar();
 
         busca = new BuscaCliente();
     }
+    private int gerarNovoId() {
 
+        int maiorId = 0;
+
+        for (DadosCliente cliente : dadosClientes) {
+
+            if (cliente.getId() > maiorId) {
+
+                maiorId = cliente.getId();
+            }
+        }
+
+        return maiorId + 1;
+    }
     public void cadastrar(Scanner scan) {
 
-        int id = clientes.size() + 1;
+        int id = gerarNovoId();
 
         System.out.println("Nome:");
         String nome = scan.nextLine();
@@ -30,14 +43,14 @@ public class OficinaService {
         System.out.println("Modelo:");
         String modelo = scan.nextLine();
 
-        System.out.println("Cor:");
+        System.out.println("Ano:");
         String cor = scan.nextLine();
 
-        System.out.println("Observação:");
+        System.out.println("Observação/Ordem de serviço:");
         String obs = scan.nextLine();
 
-        Cliente cliente =
-                new Cliente(
+        DadosCliente dadosCliente =
+                new DadosCliente(
                         id,
                         nome,
                         telefone,
@@ -47,19 +60,18 @@ public class OficinaService {
                         obs
                 );
 
-        clientes.add(cliente);
+        dadosClientes.add(dadosCliente);
 
-        ArquivoCliente.salvar(clientes);
+        ArquivoCliente.salvar(dadosClientes);
 
         System.out.println("Cliente cadastrado.");
     }
 
     public void listar() {
 
-        for (Cliente c : clientes) {
+        for (DadosCliente c : dadosClientes) {
 
             System.out.println(c);
-            System.out.println("----------------");
         }
     }
 
@@ -72,7 +84,7 @@ public class OficinaService {
         int op = scan.nextInt();
         scan.nextLine();
 
-        Cliente cliente = null;
+        DadosCliente dadosCliente = null;
 
         switch (op) {
 
@@ -82,9 +94,9 @@ public class OficinaService {
                 int id = scan.nextInt();
                 scan.nextLine();
 
-                cliente =
+                dadosCliente =
                         busca.buscarPorId(
-                                clientes,
+                                dadosClientes,
                                 id);
 
                 break;
@@ -93,9 +105,9 @@ public class OficinaService {
 
                 System.out.println("Nome:");
 
-                cliente =
+                dadosCliente =
                         busca.buscarPorNome(
-                                clientes,
+                                dadosClientes,
                                 scan.nextLine());
 
                 break;
@@ -104,17 +116,17 @@ public class OficinaService {
 
                 System.out.println("Placa:");
 
-                cliente =
+                dadosCliente =
                         busca.buscarPorPlaca(
-                                clientes,
+                                dadosClientes,
                                 scan.nextLine());
 
                 break;
         }
 
-        if (cliente != null) {
+        if (dadosCliente != null) {
 
-            System.out.println(cliente);
+            System.out.println(dadosCliente);
 
         } else {
 
@@ -130,32 +142,68 @@ public class OficinaService {
         int id = scan.nextInt();
         scan.nextLine();
 
-        Cliente cliente =
+        DadosCliente dadosCliente =
                 busca.buscarPorId(
-                        clientes,
+                        dadosClientes,
                         id);
 
-        if (cliente == null) {
+        if (dadosCliente == null) {
 
             System.out.println(
                     "Cliente não encontrado.");
 
             return;
         }
+        System.out.println("Oque você quer editar?");
+        System.out.println("Nome - 1");
+        System.out.println("Telefone - 2");
+        System.out.println("Observação - 3");
+        System.out.println("Placa - 4");
+        System.out.println("Modelo - 5");
+        System.out.println("Ano - 6");
+        System.out.println("Status - 7");
+        int edicao = scan.nextInt();
+        scan.nextLine();
+        switch (edicao) {
+            case 1:
+                System.out.println("Novo nome:");
+                dadosCliente.setNome(scan.nextLine());
 
-        System.out.println("Novo nome:");
-        cliente.setNome(scan.nextLine());
+                break;
+            case 2:
+                System.out.println("Novo telefone:");
+                dadosCliente.setTelefone(scan.nextLine());
+                break;
+            case 3:
+                System.out.println("Nova observação:");
+                dadosCliente.setObservacao(scan.nextLine());
+                break;
+            case 4:
+                System.out.println("Nova Placa:");
+                dadosCliente.setPlaca(scan.nextLine());
+                break;
+            case 5:
+                System.out.println("Novo Modelo:");
+                dadosCliente.setModelo(scan.nextLine());
+                break;
 
-        System.out.println("Novo telefone:");
-        cliente.setTelefone(scan.nextLine());
+            case 6:
+                System.out.println("Novo Ano");
+                dadosCliente.setAno(scan.nextLine());
+                break;
+            case 7:
+                System.out.println("Status");
+                dadosCliente.setStatus(scan.nextLine());
+        }
 
-        System.out.println("Nova observação:");
-        cliente.setObservacao(
-                scan.nextLine());
 
-        ArquivoCliente.salvar(clientes);
 
-        System.out.println("Atualizado.");
+
+
+
+        ArquivoCliente.salvar(dadosClientes);
+
+        System.out.println("Atualizado");
     }
 
     public void excluir(Scanner scan) {
@@ -165,12 +213,12 @@ public class OficinaService {
         int id = scan.nextInt();
         scan.nextLine();
 
-        Cliente cliente =
+        DadosCliente dadosCliente =
                 busca.buscarPorId(
-                        clientes,
+                        dadosClientes,
                         id);
 
-        if (cliente == null) {
+        if (dadosCliente == null) {
 
             System.out.println(
                     "Cliente não encontrado.");
@@ -178,9 +226,9 @@ public class OficinaService {
             return;
         }
 
-        clientes.remove(cliente);
+        dadosClientes.remove(dadosCliente);
 
-        ArquivoCliente.salvar(clientes);
+        ArquivoCliente.salvar(dadosClientes);
 
         System.out.println("Excluído.");
     }
