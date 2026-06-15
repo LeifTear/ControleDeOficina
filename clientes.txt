@@ -1,4 +1,0 @@
-1;Jussara;98265243;AK47;Bravo;2018;trocar cebolão
-2;Cunha;972611368;pgd4621;honda;2006;bucha do leque
-3;Ruan;123456789;gtd12345;Tipo;2009;sem freio
-4;sdasd;asd;asd;asd;asd;asdasd

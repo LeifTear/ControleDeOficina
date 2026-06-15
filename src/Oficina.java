@@ -13,13 +13,14 @@ public class Oficina {
         do {
 
             System.out.println("Controle da Oficina");
-            System.out.println("Seleciona o procedimento");
+            System.out.println("Selecione o procedimento");
             System.out.println("1 - Cadastrar");
             System.out.println("2 - Listar");
             System.out.println("3 - Buscar");
             System.out.println("4 - Editar");
             System.out.println("5 - Excluir");
             System.out.println("0 - Sair");
+            System.out.println("6 - Atualizar Status");
 
             opcao = scan.nextInt();
             scan.nextLine();
@@ -31,7 +32,7 @@ public class Oficina {
                     break;
 
                 case 2:
-                    oficina.listar();
+                    oficina.listar(scan);
                     break;
 
                 case 3:
@@ -46,7 +47,9 @@ public class Oficina {
                 case 5:
                     oficina.excluir(scan);
                     break;
-
+                case 6:
+                    oficina.atualizarStatus(scan);
+                    break;
                 case 0:
                     System.out.println("Finalizando Programa");
                     break;

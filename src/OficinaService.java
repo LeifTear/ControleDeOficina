@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class OficinaService {
 
@@ -29,6 +31,8 @@ public class OficinaService {
     }
     public void cadastrar(Scanner scan) {
 
+        String dataCadastro =
+                LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         int id = gerarNovoId();
 
         System.out.println("Nome:");
@@ -49,6 +53,8 @@ public class OficinaService {
         System.out.println("Observação/Ordem de serviço:");
         String obs = scan.nextLine();
 
+        String status = "Não concluído";
+
         DadosCliente dadosCliente =
                 new DadosCliente(
                         id,
@@ -57,7 +63,9 @@ public class OficinaService {
                         placa,
                         modelo,
                         cor,
-                        obs
+                        obs,
+                        dataCadastro,
+                        status
                 );
 
         dadosClientes.add(dadosCliente);
@@ -67,11 +75,31 @@ public class OficinaService {
         System.out.println("Cliente cadastrado.");
     }
 
-    public void listar() {
+    public void listar(Scanner scan) {
+
+        System.out.println("1 - Todos");
+        System.out.println("2 - Concluídos");
+        System.out.println("3 - Não concluídos");
+
+        int op = scan.nextInt();
+        scan.nextLine();
 
         for (DadosCliente c : dadosClientes) {
 
-            System.out.println(c);
+            if (op == 1) {
+
+                System.out.println(c);
+
+            } else if (op == 2 &&
+                    c.getStatus().equals("Concluído")) {
+
+                System.out.println(c);
+
+            } else if (op == 3 &&
+                    c.getStatus().equals("Não concluído")) {
+
+                System.out.println(c);
+            }
         }
     }
 
@@ -161,7 +189,6 @@ public class OficinaService {
         System.out.println("Placa - 4");
         System.out.println("Modelo - 5");
         System.out.println("Ano - 6");
-        System.out.println("Status - 7");
         int edicao = scan.nextInt();
         scan.nextLine();
         switch (edicao) {
@@ -191,9 +218,6 @@ public class OficinaService {
                 System.out.println("Novo Ano");
                 dadosCliente.setAno(scan.nextLine());
                 break;
-            case 7:
-                System.out.println("Status");
-                dadosCliente.setStatus(scan.nextLine());
         }
 
 
@@ -231,5 +255,45 @@ public class OficinaService {
         ArquivoCliente.salvar(dadosClientes);
 
         System.out.println("Excluído.");
+    }
+
+    public void atualizarStatus(Scanner scan) {
+
+        System.out.println("ID:");
+
+        int id = scan.nextInt();
+        scan.nextLine();
+
+        DadosCliente dadosCliente =
+                busca.buscarPorId(
+                        dadosClientes,
+                        id);
+
+        if (dadosCliente == null) {
+
+            System.out.println(
+                    "Cliente não encontrado.");
+
+            return;
+        }
+
+        System.out.println("1 - Concluído");
+        System.out.println("2 - Não concluído");
+
+        int opcao = scan.nextInt();
+        scan.nextLine();
+
+        if (opcao == 1) {
+
+            dadosCliente.setStatus("Concluído");
+
+        } else {
+
+            dadosCliente.setStatus("Não concluído");
+        }
+
+        ArquivoCliente.salvar(dadosClientes);
+
+        System.out.println("Status atualizado.");
     }
 }

@@ -19,7 +19,9 @@ public class ArquivoCliente {
                                 c.getPlaca() + ";" +
                                 c.getModelo() + ";" +
                                 c.getAno() + ";" +
-                                c.getObservacao()
+                                c.getObservacao() + ";" +
+                                c.getDataCadastro() + ";" +
+                                c.getStatus()
                 );
 
                 buffwriter.newLine();
@@ -60,7 +62,9 @@ public class ArquivoCliente {
                                 dados[3],
                                 dados[4],
                                 dados[5],
-                                dados[6]
+                                dados[6],
+                                dados[7],
+                                dados[8]
                         );
 
                 dadosClientes.add(dadosCliente);
