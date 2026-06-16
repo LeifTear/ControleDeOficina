@@ -12,16 +12,15 @@ public class Oficina {
 
         do {
 
-            System.out.println("Controle da Oficina");
+            System.out.println("Controle de dados da Oficina");
             System.out.println("Selecione o procedimento");
             System.out.println("1 - Cadastrar");
             System.out.println("2 - Listar");
             System.out.println("3 - Buscar");
             System.out.println("4 - Editar");
             System.out.println("5 - Excluir");
-            System.out.println("0 - Sair");
             System.out.println("6 - Atualizar Status");
-
+            System.out.println("0 - Sair");
             opcao = scan.nextInt();
             scan.nextLine();
 
@@ -36,7 +35,7 @@ public class Oficina {
                     break;
 
                 case 3:
-                    System.out.println("Selecione a opção de busca");
+                    System.out.println("Por qual opção deseja buscar?");
                     oficina.buscar(scan);
                     break;
 
